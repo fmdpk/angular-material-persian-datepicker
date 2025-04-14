@@ -1,17 +1,18 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body {
+html,
+body {
   height: 100%;
 }
 
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
-  direction: rtl!important;
+  direction: rtl !important;
   text-align: right;
 }
 .mat-datepicker-content-container {
-  direction: rtl!important;
+  direction: rtl !important;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -19,13 +20,13 @@ body {
 .mat-mdc-form-field-infix {
   flex: auto;
   min-width: 0;
-  width: 230px!important;
+  width: 230px !important;
   position: relative;
   box-sizing: border-box;
 }
 
 .mat-mdc-text-field-wrapper .mat-mdc-form-field-infix .mat-mdc-floating-label {
-  left: 58%!important;
+  left: 58% !important;
   right: auto;
 }
 
@@ -38,5 +39,9 @@ body {
   -moz-appearance: none;
   -webkit-appearance: none;
   height: 28px;
-  padding-right: 30px!important;
+  padding-right: 30px !important;
+}
+
+.mat-calendar-controls {
+  direction: ltr;
 }
