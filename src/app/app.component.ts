@@ -43,108 +43,45 @@ export class AppComponent {
   title = 'Jalali-material-date-picker';
   counter = 0;
   dateClass: MatCalendarCellClassFunction<Date> = (cellDate, view) => {
-    this.counter += 1;
-    // Only highligh dates inside the month view.
     if (view === 'month') {
-      // console.log(cellDate);
-
-      let momentDate = moment(cellDate).toDate();
       let momentDateShortFa = moment(cellDate)
         .locale('fa')
         .format('YYYY/MM/DD');
-      let momentDateShortAr = moment(cellDate)
-        .locale('ar')
-        .format('YYYY/MM/DD');
-      let momentDateShortArSA = moment(cellDate)
-        .locale('ar-SA')
-        .format('YYYY/MM/DD');
-      console.log(momentDateShortAr);
-      console.log(momentDateShortArSA);
 
       let momentDateSub1 = moment(cellDate).subtract('day', 1).toDate();
-      // let momentDateShort = moment(cellDate).locale('en').format('YYYY/MM/DD');
-      // let momentDateShortArabic = moment(cellDate).toDate();
       let arDate = new Intl.DateTimeFormat('en-GB-u-ca-islamic', {
         day: 'numeric',
         month: '2-digit',
         year: 'numeric',
       }).format(momentDateSub1);
-
-      // console.log(momentDate.toLocaleDateString('ar-SA'));
-      // console.log(momentDateSub1.toLocaleDateString('ar-SA'));
-      // console.log(arDate);
-      // console.log(momentDateSub1);
-      // console.log(momentDateShort);
       let hijriDate = arDate.split(' ')[0].split('/').reverse().join('/');
-
-      const date = momentDate.getDate();
-      // const month = momentDate.getMonth();
-      let day = momentDateShortFa.split('/')[2];
-      let month = momentDateShortFa.split('/')[1];
+      let jalaliDay = momentDateShortFa.split('/')[2];
+      let jalaliMonth = momentDateShortFa.split('/')[1];
       let hijriDay = hijriDate.split('/')[2];
       let hijriMonth = hijriDate.split('/')[1];
-      // console.log(month);
-      // console.log(day);
-      // console.log(hijriMonth);
-      // console.log(hijriDay);
-      // console.log(momentDateShortFa);
-      // console.log(hijriDate);
-      // console.log(`${hijriMonth}/${hijriDay}`);
 
       let flag = false;
       HolidayEvents.forEach((item) => {
-        if (
-          item.event_name ===
-            'ولادت حضرت قائم عجل الله تعالی فرجه و جشن نیمه شعبان' &&
-          `${hijriMonth}/${hijriDay}` === '08/15'
-        ) {
-          console.log(item.event_name);
-        }
         if (item.date.type === 'shamsi') {
-          // console.log('shamsi-sham');
-
-          let cDate = item.date.date.join('/');
-          // console.log(cDate);
-          // // console.log(`${hijriMonth}/${hijriDay}`);
-          // console.log(`${month}/${day}`);
-          if (cDate === `${month}/${day}`) {
+          let monthAndDate = item.date.date.join('/');
+          if (monthAndDate === `${jalaliMonth}/${jalaliDay}`) {
             flag = true;
           }
-
-          // item.date.date.forEach((elem) => {
-          //   if (elem === month || elem === day) {
-          //     console.log('shamsi');
-
-          //   }
-          // });
         } else if (item.date.type === 'hijri') {
-          let cDate = item.date.date.join('/');
-          console.log(cDate);
-          console.log(`${hijriMonth}/${hijriDay}`);
-          console.log(`${month}/${day}`);
-          if (cDate === `${hijriMonth}/${hijriDay}`) {
+          let monthAndDate = item.date.date.join('/');
+          if (monthAndDate === `${hijriMonth}/${hijriDay}`) {
             flag = true;
           }
-          // item.date.date.forEach((elem) => {
-          //   if (elem === hijriMonth || elem === hijriDay) {
-          //     console.log('hijri');
-          //     flag = true;
-          //   }
-          // });
         }
       });
-      // console.log(flag);
 
-      // Highlight the 1st and 20th day of each month.
-      return flag ? 'example-custom-date-class' : '';
+      return flag ? 'holiday' : '';
     }
 
     return '';
   };
 
   ngOnInit() {
-    console.log(HolidayEvents);
-    console.log(HolidayEvents);
     let holidays = HolidayEvents.filter((item) => item.is_holiday);
     console.log(holidays);
   }
