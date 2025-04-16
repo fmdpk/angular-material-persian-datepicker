@@ -7,7 +7,8 @@
       <mat-datepicker-toggle matIconSuffix [for]="picker">
         <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
       </mat-datepicker-toggle>
-      <mat-datepicker [dateClass]="dateClass" #picker (opened)="onDatepickerOpened()"></mat-datepicker>
+      <!-- <mat-datepicker [dateClass]="dateClass" #picker (opened)="onDatepickerOpened()"></mat-datepicker> -->
+      <mat-datepicker #picker (opened)="onDatepickerOpened()"></mat-datepicker>
     </mat-form-field>
   </div>
 </div>

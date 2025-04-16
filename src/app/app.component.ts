@@ -42,44 +42,44 @@ import { HolidayEvents } from './events';
 export class AppComponent {
   title = 'Jalali-material-date-picker';
   counter = 0;
-  dateClass: MatCalendarCellClassFunction<Date> = (cellDate, view) => {
-    if (view === 'month') {
-      let momentDateShortFa = moment(cellDate)
-        .locale('fa')
-        .format('YYYY/MM/DD');
+  // dateClass: MatCalendarCellClassFunction<Date> = (cellDate, view) => {
+  //   if (view === 'month') {
+  //     let momentDateShortFa = moment(cellDate)
+  //       .locale('fa')
+  //       .format('YYYY/MM/DD');
 
-      let momentDateSub1 = moment(cellDate).subtract('day', 1).toDate();
-      let arDate = new Intl.DateTimeFormat('en-GB-u-ca-islamic', {
-        day: 'numeric',
-        month: '2-digit',
-        year: 'numeric',
-      }).format(momentDateSub1);
-      let hijriDate = arDate.split(' ')[0].split('/').reverse().join('/');
-      let jalaliDay = momentDateShortFa.split('/')[2];
-      let jalaliMonth = momentDateShortFa.split('/')[1];
-      let hijriDay = hijriDate.split('/')[2];
-      let hijriMonth = hijriDate.split('/')[1];
+  //     let momentDateSub1 = moment(cellDate).subtract('day', 1).toDate();
+  //     let arDate = new Intl.DateTimeFormat('en-GB-u-ca-islamic', {
+  //       day: 'numeric',
+  //       month: '2-digit',
+  //       year: 'numeric',
+  //     }).format(momentDateSub1);
+  //     let hijriDate = arDate.split(' ')[0].split('/').reverse().join('/');
+  //     let jalaliDay = momentDateShortFa.split('/')[2];
+  //     let jalaliMonth = momentDateShortFa.split('/')[1];
+  //     let hijriDay = hijriDate.split('/')[2];
+  //     let hijriMonth = hijriDate.split('/')[1];
 
-      let flag = false;
-      HolidayEvents.forEach((item) => {
-        if (item.date.type === 'shamsi') {
-          let monthAndDate = item.date.date.join('/');
-          if (monthAndDate === `${jalaliMonth}/${jalaliDay}`) {
-            flag = true;
-          }
-        } else if (item.date.type === 'hijri') {
-          let monthAndDate = item.date.date.join('/');
-          if (monthAndDate === `${hijriMonth}/${hijriDay}`) {
-            flag = true;
-          }
-        }
-      });
+  //     let flag = false;
+  //     HolidayEvents.forEach((item) => {
+  //       if (item.date.type === 'shamsi') {
+  //         let monthAndDate = item.date.date.join('/');
+  //         if (monthAndDate === `${jalaliMonth}/${jalaliDay}`) {
+  //           flag = true;
+  //         }
+  //       } else if (item.date.type === 'hijri') {
+  //         let monthAndDate = item.date.date.join('/');
+  //         if (monthAndDate === `${hijriMonth}/${hijriDay}`) {
+  //           flag = true;
+  //         }
+  //       }
+  //     });
 
-      return flag ? 'holiday' : '';
-    }
+  //     return flag ? 'holiday' : '';
+  //   }
 
-    return '';
-  };
+  //   return '';
+  // };
 
   ngOnInit() {
     let holidays = HolidayEvents.filter((item) => item.is_holiday);
@@ -127,4 +127,17 @@ export class AppComponent {
     }
     return str;
   }
+}
+
+function isHijriLeapYear(year: number) {
+  const remainder = year % 30;
+  const leapYears = new Set([2, 5, 7, 10, 13, 16, 18, 21, 24, 26, 29]);
+  return leapYears.has(remainder);
+}
+
+function leap_persian(year: number) {
+  const kabiseYears = [1, 5, 9, 13, 17, 22, 26, 30];
+  const remainder = year % 33;
+  return kabiseYears.includes(remainder);
+  // return 682 > (682 * (((b - (0 < b ? 474 : 473)) % 2820) + 512)) % 2816;
 }
